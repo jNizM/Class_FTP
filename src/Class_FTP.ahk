@@ -152,11 +152,11 @@ class FTP
 
 		if (hConnect := DllCall("wininet\InternetConnect", "ptr",    hInternet
 														 , "ptr",    &ServerName
-														 , "ushort", INTERNET_DEFAULT_FTP_PORT ;(Port = 21) ? INTERNET_DEFAULT_FTP_PORT : Port
-														 , "ptr",    &UserName ;(UserName) ? &UserName : 0
-														 , "ptr",    &Password ;(Password) ? &Password : 0
+														 , "ushort", (Port = 21 ? INTERNET_DEFAULT_FTP_PORT : Port)
+														 , "ptr",    (UserName ? &UserName : 0)
+														 , "ptr",    (Password ? &Password : 0)
 														 , "uint",   INTERNET_SERVICE_FTP
-														 , "uint",   INTERNET_FLAG_PASSIVE ;(FTP_PASV) ? INTERNET_FLAG_PASSIVE : 0
+														 , "uint",   (FTP_PASV ? INTERNET_FLAG_PASSIVE : 0)
 														 , "uptr",   0
 														 , "ptr"))
 			return hConnect
@@ -170,9 +170,9 @@ class FTP
 		static INTERNET_OPEN_TYPE_PROXY  := 3
 
 		if (hInternet := DllCall("wininet\InternetOpen", "ptr",  &Agent
-													   , "uint", (Proxy) ? INTERNET_OPEN_TYPE_PROXY : INTERNET_OPEN_TYPE_DIRECT
-													   , "ptr",  (Proxy) ? &Proxy : 0
-													   , "ptr",  (ProxyBypass) ? &ProxyBypass : 0
+													   , "uint", (Proxy ? INTERNET_OPEN_TYPE_PROXY : INTERNET_OPEN_TYPE_DIRECT)
+													   , "ptr",  (Proxy ? &Proxy : 0)
+													   , "ptr",  (ProxyBypass ? &ProxyBypass : 0)
 													   , "uint", 0
 													   , "ptr"))
 			return hInternet
