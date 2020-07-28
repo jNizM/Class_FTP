@@ -3,7 +3,7 @@
 ;
 ; Author ....: jNizM
 ; Released ..: 2020-07-26
-; Modified ..: 2020-07-26
+; Modified ..: 2020-07-27
 ; ===============================================================================================================================
 
 
@@ -205,11 +205,11 @@ class FTP
 		else if (mode = "kilobytes" || mode = "kb")
 			output := Round(bytes / 1024, 2) . (suffix ? " KB" : "")
 		else if (mode = "megabytes" || mode = "mb")
-			output := Round(bytes / 10204**2, 2) . (suffix ? " MB" : "")
+			output := Round(bytes / 1024**2, 2) . (suffix ? " MB" : "")
 		else if (mode = "gigabytes" || mode = "gb")
-			output := Round(bytes / 10204**3, 2) . (suffix ? " GB" : "")
+			output := Round(bytes / 1024**3, 2) . (suffix ? " GB" : "")
 		else if (mode = "terabytes" || mode = "tb")
-			output := Round(bytes / 10204**4, 2) . (suffix ? " TB" : "")
+			output := Round(bytes / 1024**4, 2) . (suffix ? " TB" : "")
 		else
 			output := Round(bytes, 2) . (suffix ? " Bytes" : "")
 		return output
