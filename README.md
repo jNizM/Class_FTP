@@ -76,6 +76,46 @@ FTP.Disconnect(hSession)
 FTP.Close(hFTP)
 ```
 
+**Enumerate all Files in root directory. (!!! EXPERIMENTAL !!!)**
+```AutoHotkey
+hFTP := FTP.Open("AHK-FTP")
+hSession := FTP.Connect(hFTP, "ftp.example.com", 21, "user", "passwd")
+for k, File in FTP.FindFiles(hSession)
+	MsgBox % File.FileName
+FTP.Disconnect(hSession)
+FTP.Close(hFTP)
+```
+
+**Enumerate all Files in a subdirectory. (!!! EXPERIMENTAL !!!)**
+```AutoHotkey
+hFTP := FTP.Open("AHK-FTP")
+hSession := FTP.Connect(hFTP, "ftp.example.com", 21, "user", "passwd")
+for k, File in FTP.FindFiles(hSession, "/Folder 2")
+	MsgBox % File.FileName
+FTP.Disconnect(hSession)
+FTP.Close(hFTP)
+```
+
+**Enumerate all Folders in root directory. (!!! EXPERIMENTAL !!!)**
+```AutoHotkey
+hFTP := FTP.Open("AHK-FTP")
+hSession := FTP.Connect(hFTP, "ftp.example.com", 21, "user", "passwd")
+for k, Folder in FTP.FindFolders(hSession)
+	MsgBox % Folder.FileName
+FTP.Disconnect(hSession)
+FTP.Close(hFTP)
+```
+
+**Enumerate all Folders in a subdirectory. (!!! EXPERIMENTAL !!!)**
+```AutoHotkey
+hFTP := FTP.Open("AHK-FTP")
+hSession := FTP.Connect(hFTP, "ftp.example.com", 21, "user", "passwd")
+for k, Folder in FTP.FindFolders(hSession, "/Folder 2")
+	MsgBox % Folder.FileName
+FTP.Disconnect(hSession)
+FTP.Close(hFTP)
+```
+
 
 ## Questions / Bugs / Issues
 Report any bugs or issues on the [AHK Thread](https://www.autohotkey.com/boards/viewtopic.php?f=6&t=79142). Same for any questions.
