@@ -3,7 +3,7 @@
 ;
 ; Author ....: jNizM
 ; Released ..: 2020-07-26
-; Modified ..: 2020-07-30
+; Modified ..: 2020-07-31
 ; Github ....: https://github.com/jNizM/Class_FTP
 ; Forum .....: https://www.autohotkey.com/boards/viewtopic.php?f=6&t=79142
 ; ===============================================================================================================================
@@ -194,9 +194,9 @@ class FTP
 		FIND_DATA := []
 		FIND_DATA["FileAttr"]          := NumGet(addr + 0, "uint")
 		FIND_DATA["FileAttributes"]    := this.FileAttributes(NumGet(addr + 0, "uint"))
-		FIND_DATA["CreationTime"]      := this.FileTime(addr +  4)
-		FIND_DATA["LastAccessTime"]    := this.FileTime(addr + 12)
-		FIND_DATA["LastWriteTime"]     := this.FileTime(addr + 20)
+		FIND_DATA["CreationTime"]      := this.FileTime(NumGet(addr +  4, "uint64"))
+		FIND_DATA["LastAccessTime"]    := this.FileTime(NumGet(addr + 12, "uint64"))
+		FIND_DATA["LastWriteTime"]     := this.FileTime(NumGet(addr + 20, "uint64"))
 		FIND_DATA["FileSize"]          := this.FormatBytes((NumGet(addr + 28, "uint") * (MAXDWORD + 1)) + NumGet(addr + 32, "uint"), SizeFormat, SizeSuffix)
 		FIND_DATA["FileName"]          := StrGet(addr + 44, "utf-16")
 		FIND_DATA["AlternateFileName"] := StrGet(addr + 44 + MAX_PATH * (A_IsUnicode ? 2 : 1), "utf-16")
@@ -226,10 +226,8 @@ class FTP
 
 	FileTime(addr)
 	{
-		VarSetCapacity(FileTime, 8, 0)
-		DllCall("RtlMoveMemory", "ptr", &FileTime, "ptr", addr, "uptr", 8)
-		this.FileTimeToSystemTime(FileTime, SystemTime)
-		this.SystemTimeToTzSpecificLocalTime(SystemTime, LocalTime)
+		this.FileTimeToSystemTime(addr, SystemTime)
+		this.SystemTimeToTzSpecificLocalTime(&SystemTime, LocalTime)
 		return Format("{:04}{:02}{:02}{:02}{:02}{:02}"
 					, NumGet(LocalTime,  0, "ushort")
 					, NumGet(LocalTime,  2, "ushort")
@@ -240,10 +238,10 @@ class FTP
 	}
 
 
-	FileTimeToSystemTime(ByRef FileTime, ByRef SystemTime)
+	FileTimeToSystemTime(FileTime, ByRef SystemTime)
 	{
 		VarSetCapacity(SystemTime, 16, 0)
-		if (DllCall("FileTimeToSystemTime", "ptr", &FileTime, "ptr", &SystemTime))
+		if (DllCall("FileTimeToSystemTime", "int64*", FileTime, "ptr", &SystemTime))
 			return true
 		return false
 	}
@@ -329,10 +327,10 @@ class FTP
 	}
 
 
-	SystemTimeToTzSpecificLocalTime(ByRef SystemTime, ByRef LocalTime)
+	SystemTimeToTzSpecificLocalTime(SystemTime, ByRef LocalTime)
 	{
 		VarSetCapacity(LocalTime, 16, 0)
-		if (DllCall("SystemTimeToTzSpecificLocalTime", "ptr", 0, "ptr", &SystemTime, "ptr", &LocalTime))
+		if (DllCall("SystemTimeToTzSpecificLocalTime", "ptr", 0, "ptr", SystemTime, "ptr", &LocalTime))
 			return true
 		return false
 	}
