@@ -288,14 +288,14 @@ class FTP
 		static INTERNET_FLAG_PASSIVE     := 0x08000000
 
 		if (hConnect := DllCall("wininet\InternetConnect", "ptr",    hInternet
-														 , "ptr",    &ServerName
-														 , "ushort", (Port = 21 ? INTERNET_DEFAULT_FTP_PORT : Port)
-														 , "ptr",    (UserName ? &UserName : 0)
-														 , "ptr",    (Password ? &Password : 0)
-														 , "uint",   INTERNET_SERVICE_FTP
-														 , "uint",   (FTP_PASV ? INTERNET_FLAG_PASSIVE : 0)
-														 , "uptr",   0
-														 , "ptr"))
+		                                                 , "ptr",    &ServerName
+		                                                 , "ushort", (Port = 21 ? INTERNET_DEFAULT_FTP_PORT : Port)
+		                                                 , "ptr",    (UserName ? &UserName : 0)
+		                                                 , "ptr",    (Password ? &Password : 0)
+		                                                 , "uint",   INTERNET_SERVICE_FTP
+		                                                 , "uint",   (FTP_PASV ? INTERNET_FLAG_PASSIVE : 0)
+		                                                 , "uptr",   0
+		                                                 , "ptr"))
 			return hConnect
 		return false
 	}
@@ -307,11 +307,11 @@ class FTP
 		static INTERNET_OPEN_TYPE_PROXY  := 3
 
 		if (hInternet := DllCall("wininet\InternetOpen", "ptr",  &Agent
-													   , "uint", (Proxy ? INTERNET_OPEN_TYPE_PROXY : INTERNET_OPEN_TYPE_DIRECT)
-													   , "ptr",  (Proxy ? &Proxy : 0)
-													   , "ptr",  (ProxyBypass ? &ProxyBypass : 0)
-													   , "uint", 0
-													   , "ptr"))
+		                                               , "uint", (Proxy ? INTERNET_OPEN_TYPE_PROXY : INTERNET_OPEN_TYPE_DIRECT)
+		                                               , "ptr",  (Proxy ? &Proxy : 0)
+		                                               , "ptr",  (ProxyBypass ? &ProxyBypass : 0)
+		                                               , "uint", 0
+		                                               , "ptr"))
 			return hInternet
 		return false
 	}
