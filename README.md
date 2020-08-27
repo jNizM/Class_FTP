@@ -1,6 +1,31 @@
 # Class_FTP
- AutoHotkey wrapper for FTP Sessions ([msdn-docs](https://docs.microsoft.com/en-us/windows/win32/wininet/ftp-sessions))
+AutoHotkey wrapper for FTP Sessions ([msdn-docs](https://docs.microsoft.com/en-us/windows/win32/wininet/ftp-sessions))
 
+## Methods
+
+* Close(hInternet)
+* Connect(hInternet, ServerName, Port := 21, UserName := "", Password := "", FTP_PASV := 1)
+* CreateDirectory(hConnect, Directory)
+* DeleteFile(hConnect, FileName)
+* Disconnect(hConnect)
+* FindFiles(hConnect, SearchFile := "*.*")  
+    * _Properties:_  
+        * .FileAttributes  
+        * .CreationTime  
+        * .LastAccessTime  
+        * .LastWriteTime  
+        * .FileSize  
+        * .FileName  
+        * .AlternateFileName  
+* FindFolders(hConnect, SubDirectories := "*.*")
+* GetCurrentDirectory(hConnect)
+* GetFile(hConnect, RemoteFile, NewFile, OverWrite := 0, Flags := 0)
+* GetFileSize(hConnect, FileName, SizeFormat := "auto", SizeSuffix := false)
+* Open(Agent, Proxy := "", ProxyBypass := "")
+* PutFile(hConnect, LocaleFile, RemoteFile, Flags := 0)
+* RemoveDirectory(hConnect, Directory)
+* RenameFile(hConnect, ExistingFile, NewFile)
+* SetCurrentDirectory(hconnect, Directory)
 
 ## Examples
 
